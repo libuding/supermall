@@ -2,6 +2,7 @@
   <div class="wrapper" ref="aaa">
     <ul class="content">
       <button @click="btnClick">按钮</button>
+      <div @click="divClick">哦吼</div>
       <li>分类1</li>
       <li>分类2</li>
       <li>分类3</li>
@@ -119,8 +120,8 @@ export default {
     // this.scroll = new BScrollthis.$refs.aaa, {});
     (this.scroll = new BScroll(document.querySelector(".wrapper"), {
       probeType: 3,
-      pullUpLoad: true,
-      click: true
+      pullUpLoad: true
+      // click: true
     })),
       this.scroll.on("scroll", position => {
         // console.log(position);
@@ -132,6 +133,9 @@ export default {
   methods: {
     btnClick() {
       console.log("监听");
+    },
+    divClick() {
+      console.log("div");
     }
   }
 };
