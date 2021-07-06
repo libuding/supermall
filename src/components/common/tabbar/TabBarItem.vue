@@ -58,8 +58,6 @@ export default {
   methods: {
     itemClick() {
       //   console.log("你好");
-      console.log("this.path");
-      console.log(this.path);
       this.$router.replace(this.path);
     }
   }

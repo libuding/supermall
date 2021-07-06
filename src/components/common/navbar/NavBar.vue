@@ -33,4 +33,7 @@ export default {
 .center {
   flex: 1;
 }
+.back {
+  margin-top: 10px;
+}
 </style>
