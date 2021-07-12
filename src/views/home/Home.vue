@@ -40,11 +40,11 @@ import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodList from "components/content/goods/GoodsList.vue";
 import Scroll from "components/common/scroll/Scroll";
-import BackTop from "components/content/backtop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
 // import {debounce} from "../../common/utils"
 import { debounce } from "common/utils";
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 
 export default {
   name: "Home",
@@ -55,9 +55,9 @@ export default {
     NavBar,
     TabControl,
     GoodList,
-    Scroll,
-    BackTop
+    Scroll
   },
+  mixins: [itemListenerMixin, backTopMixin],
   data() {
     return {
       // result: null
@@ -69,7 +69,6 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentType: "pop",
-      isShowBackTop: false,
       tabOffsetTop: 0,
       isTabFixed: false,
       saveY: 0
@@ -92,6 +91,7 @@ export default {
   deactivated() {
     this.saveY = this.$refs.scroll.getScrollY();
     // console.log(this.saveY);
+    this.$bus.$off("itemImgLoad", this.itemImgListener);
   },
   created() {
     this.getHomeMultidata();
@@ -100,16 +100,7 @@ export default {
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
   },
-  mounted() {
-    // 1.图片加载完成的事件监听
-    const refresh = debounce(
-      this.$refs.scroll && this.$refs.scroll.refresh,
-      50
-    );
-    this.$bus.$on("itemImagLoad", () => {
-      refresh();
-    });
-  },
+  mounted() {},
   methods: {
     // 事件监听相关的方法
     tabClick(index) {
@@ -126,13 +117,6 @@ export default {
       }
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
-    },
-    backClick() {
-      // this.$refs.scroll.scroll;
-      // this.$refs.scroll.message;
-      // this.$refs.scroll.scroll.scrollTo(0, 0, 500);
-      // 这里在Scroll封装了一层
-      this.$refs.scroll.scrollTo(0, 0);
     },
     contentScroll(position) {
       // 1.判断BackTop是否显示

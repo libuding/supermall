@@ -11,10 +11,18 @@ export function getDetail(iid) {
     })
 }
 
+export function getRecommend() {
+    return request({
+        url: '/recommend'
+    })
+}
+
+
 //商品基本信息
 export class Goods {
     constructor(itemInfo, colums, services) {
         this.title = itemInfo.title;
+        this.desc = itemInfo.desc;
         this.desc = itemInfo.desc;
         this.newPrice = itemInfo.price;
         this.oldPrice = itemInfo.oldPrice;

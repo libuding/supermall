@@ -13,7 +13,12 @@
     </div>
     <div class="info-service">
       <span class="info-service-item" v-for="index in goods.services.length-1" :key="index">
-        <img :src="goods.services[index-1].icon" alt />
+        <!-- <img :src="goods.services[index-1].icon" alt /> -->
+        <!-- 服务器第一个图请求不到所以这样写 -->
+        <img
+          :src="goods.services[index-1].icon? goods.services[index-1].icon : '//s11.mogucdn.com/p1/160607/upload_ie4tkmbtgqztomjqhezdambqgqyde_44x44.png'"
+        />
+
         <span>{{goods.services[index-1].name}}</span>
       </span>
     </div>

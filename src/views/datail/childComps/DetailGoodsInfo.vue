@@ -5,15 +5,12 @@
       <div class="desc">{{detailInfo.desc}}</div>
       <div class="end"></div>
     </div>
-    <div class="info-key">{{detailInfo.detailImage[0].key}}</div>
-    <div class="info-list">
-      <img
-        v-for="(item, index) in detailInfo.detailImage[0].list"
-        :key="index"
-        :src="item"
-        @load="imgLoad"
-        alt
-      />
+
+    <div v-for="(item,index) in detailInfo.detailImage" :key="index">
+      <div class="info-key">{{item.key}}</div>
+      <div class="info-list">
+        <img v-for="(item, index) in item.list" :key="index" :src="item" @load="imgLoad" alt />
+      </div>
     </div>
   </div>
 </template>
@@ -38,19 +35,21 @@ export default {
   methods: {
     imgLoad() {
       // 判断 当所有的图片都加载完了，才能进行一次回调
-      if (++this.counter === this.imagesLength) {
-        console.log("de-goods-imageload");
-        this.$emit("imageLoad");
-      }
-    }
-  },
-  watch: {
-    detailInfo() {
-      //获取图片的个数
-      this.imagesLength = this.detailInfo.detailImage[0].list.length;
+      // if (++this.counter === this.imagesLength) {
+      //   this.$emit("imageLoad");
+      // }
+      //用防抖做一下
+      this.$emit("detailImageLoad");
     }
   }
 };
+//   watch: {
+//     detailInfo() {
+//       //获取图片的个数
+//       this.imagesLength = this.detailInfo.detailImage[0].list.length;
+//     }
+//   }
+// };
 </script>
 
 <style scoped>
